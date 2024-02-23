@@ -1,10 +1,16 @@
+let count = 0;
+
 function toggleMobileNavbar() {
   let mobileBar = document.getElementById("float-bar");
   let mobileNavBar = document.querySelector("nav.mobile-navbar");
 
-  if (mobileBar.style.display == "none") {
+  if (count == 0) {
     mobileBar.style.display = "block";
-    mobileNavBar.style.backgroundColor = "rgb(0, 0, 0)";
+    mobileNavBar.style.backgroundColor = "rgb(24, 28, 37)";
+    count = 1;
+  } else if (mobileBar.style.display == "none") {
+    mobileBar.style.display = "block";
+    mobileNavBar.style.backgroundColor = "rgb(24, 28, 37)";
   } else {
     mobileBar.style.display = "none";
     mobileNavBar.style.backgroundColor = "rgba(16, 24, 30, 0.8)";
