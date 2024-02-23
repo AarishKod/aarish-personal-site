@@ -63,11 +63,30 @@
   align-items: center;
 }
 
+.experience-content {
+  width: 75%;
+  margin: 20px;
+}
+
+.experience-main-body {
+  width: 100%;
+}
+
 .float-bar-list li {
   list-style-type: none;
   text-decoration: none;
   text-align: center;
   margin: 15px;
+}
+
+.resume-main-content {
+  margin: 20px;
+  text-align: center;
+}
+
+.resume-main-content iframe {
+  width: 65%;
+  height: 75vh;
 }
 
 .mobile-navbar {
