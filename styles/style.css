@@ -79,6 +79,26 @@
   margin: 15px;
 }
 
+.mobile-pdf-d {
+  background-color: #7569da;
+  width: 150px;
+  border-color: #7569da;
+  /* margin-left: 1vw; */
+}
+
+.resume-mobile-content {
+  display: none;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.containter-rmc {
+  display: block;
+  text-align: center;
+}
+
 .resume-main-content {
   margin: 20px;
   text-align: center;
@@ -95,6 +115,14 @@
 
 @media screen and (max-width: 480px) {
   .desktop-navbar {
+    display: none;
+  }
+
+  .resume-mobile-content {
+    display: flex;
+  }
+
+  .resume-main-content {
     display: none;
   }
 
