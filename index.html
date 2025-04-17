@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aarish Kodnaney</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/morestyle.css" />
     <link rel="stylesheet" href="pico-1.5.11/css/pico.min.css" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
   </head>
   <body>
-    <div class="nav">
+    <div class="nav" id="navid">
       <nav class="desktop-navbar">
         <ul class="nav-elements-list">
           <li>
@@ -19,14 +19,11 @@
           </li>
           <li><a href="subpages/resume.html" class="contrast">Resume</a></li>
           <li>
-            <a href="subpages/experience.html" class="contrast">Experience</a>
-          </li>
-          <li>
             <a href="subpages/contact-page.html" class="contrast">Contact</a>
           </li>
         </ul>
         <ul class="nav-brand-list">
-          <li><strong>a kodee project</strong></li>
+          <li><strong id="daye"></strong></li>
         </ul>
       </nav>
       <!-- Mobile navbar -->
@@ -50,7 +47,7 @@
           </li>
         </ul>
         <ul class="nav-brand-list">
-          <li><strong>kodee</strong></li>
+          <li><strong>🥂</strong></li>
         </ul>
       </nav>
       <div id="float-bar">
@@ -62,11 +59,6 @@
             <a href="subpages/resume.html" class="contrast"><b>Resume</b></a>
           </li>
           <li>
-            <a href="subpages/experience.html" class="contrast"
-              ><b>Experience</b></a
-            >
-          </li>
-          <li>
             <a href="subpages/contact-page.html" class="contrast"
               ><b>Contact</b></a
             >
@@ -74,35 +66,302 @@
         </ul>
       </div>
     </div>
-    <div class="grid set-full-height">
-      <div class="img-container-tablet-phone center-f">
-        <img
+    <div class="marathon" id="i-start">
+      <div class="marathon-text academic-text beginning-text">
+        <div class="inner-headings headings inner-beginning">
+          <h5>Hey!</h5>
+          <h1>I'm <mj class="aarish-kodnaney">Aarish</mj> Kodnaney</h1>
+          <p>
+            Senior at South Windsor High School <mj class="mobile-break">|</mj>
+            <b>Northeastern University 29'</b>
+          </p>
+          <p class="intro-text">
+            Hey, I'm Aarish. I'm a senior at SWHS. This fall, I'll be in Boston
+            majoring in Computer Science & Business Administration at
+            Northeastern University. I enjoy running, playing tennis, hitting the gym, and spending time with my dog. I made this website with
+            <img
+              style="height: 17px"
+              src="/images/osv/html-1.svg"
+              alt="an image of the html icon"
+            />,
+            <img
+              style="height: 17px"
+              src="/images/osv/css-3.svg"
+              alt="an image of the css icon"
+            />,
+            <img
+              style="height: 17px"
+              src="/images/osv/logo-javascript.svg"
+              alt=""
+            />, & ❤️.
+          </p>
+          <button onclick="scrollToDiv('i-marathon')" class="scrolling-button">
+            Aarish's Experience
+            <svg
+              class="sb-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+            >
+              <path
+                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+              />
+            </svg>
+          </button>
+        </div>
+        </div>
+        <div class="aca-visual marathon-visual">
+          <img
           class="center-image"
-          src="images/IMG_2500.jpg"
+          src="images/IMG_4883.jpeg"
           alt="Image of Aarish standing in central madrid"
         />
-      </div>
-      <div class="site-upper-content">
-        <div class="inner-headings headings">
-          <h1>Aarish Kodnaney</h1>
-          <p>Junior at South Windsor High School</p>
-          <br />
-          <p class="intro-text">
-            Hey, I'm Aarish. I'm a junior at SWHS interested in pursuing a
-            bachelors in computer science. I also have a strong interest in
-            urbanism and walkability.
-          </p>
         </div>
       </div>
+    </div>
+    <div class="site-continued-content">
+      <div class="marathon" id="i-marathon">
+        <div class="marathon-visual" id="northeastern-image">
+          <img
+            class="hartford-marathon-image"
+            src="images/IMG_1739.jpeg"
+            alt="Image of Aarish Kodnaney running in the 2024 Hartford Marathon. You can see his untied shoe"
+          />
+        </div>
+        <div class="marathon-text">
+          <hgroup class="marathon-hgroup">
+            <h1><ng>Northeastern</ng> University <ng>29'</ng></h1>
+            <p style="width: 300px">
+              A Proud Husky.
+            </p>
+          </hgroup>
+        </div>
+        <div class="marathon-stats">
+          <hgroup class="marathon-hgroup mha2">
+            <h1>Info:</h1>
+            <p>
+              <b>Campus:</b> Boston
+              <br />
+              <b>Major:</b> Computer Science and Business Administration (CSBA)
+              <br />
+              <b>Contact:</b> kodnaney.a@northeastern.edu
+              <br />
+              Currently looking for a Summer 26' internship
+              <br />
+              
+            </p>
+            <button
+              onclick="scrollToDiv('i-investing')"
+              class="scrolling-button"
+              style="width: 300px; margin: 0"
+            >
+              Tell me more about Aarish
+              <svg
+                class="sb-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+              >
+                <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                  d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                />
+              </svg>
+            </button>
+          </hgroup>
+        </div>
+      </div>
+      <div class="marathon" id="i-investing">
+        <div class="marathon-visual" id="tennis-doncic-pic">
 
-      <div class="img-container">
-        <img
-          class="center-image"
-          src="images/IMG_2500.jpg"
-          alt="Image of Aarish standing in central madrid"
-        />
+          <img
+            class="hartford-marathon-image"
+            src="images/Image 3-25-25 at 9.43 PM.jpg"
+            alt="Image of aarish kodnaney serving a tennis ball. He's wearing gray shorts and a Luca Doncic hoodie while holding a yonex tennis racket"
+          />
+        </div>
+        <div class="marathon-text">
+          <hgroup class="marathon-hgroup">
+            <h1>Sports</h1>
+            <p style="width: 300px">
+              Aarish is captain and varsity on the boys cross country team. He's also varsity track and a former varsity (doubles) boys tennis player.
+            </p>
+            <p style="font-size: 12px; width: 290px; color: rgb(118, 129, 139)">
+              His rec basketball team also won the chip this year.
+              <br />
+              Hartford Half Marathon finisher (1:35)
+              <br />
+              Bench: 135 (lbs)
+            </p>
+            <button
+              onclick="scrollToDiv('i-academic')"
+              class="scrolling-button"
+              style="width: 300px; margin: 0"
+            >
+              Tell me more
+              <svg
+                class="sb-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+              >
+                <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                  d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                />
+              </svg>
+            </button>
+          </hgroup>
+        </div>
+        <div class="marathon-visual">
+          <figure>
+            <div class="doncic-wrapper">
+            <img
+              class="hartford-marathon-image xid"
+              src="images/IMG_2359 (1).jpg"
+              alt="Image of Aarish Kodnaney making a weird face in his car. You can see two garage openers at the top."
+            />
+          </div>
+          </figure>
+        </div>
+      </div>
+      <div class="marathon" id="i-academic">
+        <div class="marathon-text academic-text" id="academicid">
+          <hgroup class="marathon-hgroup">
+            <h1>Academics</h1>
+            <h6>Aarish has taken (& passed) the following AP Courses</h6>
+          </hgroup>
+          <ul class="mob-list">
+            <li>AP Calculus BC</li>
+            <li>AP Microeconomics</li>
+            <li>AP Macroeconomics</li>
+            <li>AP Government and Politics</li>
+            <li>AP Computer Science</li>
+            <li>AP Computer Science Principles</li>
+            <li>AP English Language and Composition</li>
+            <li>AP Psychology</li>
+            <li>AP United States History</li>
+          </ul>
+          <p style="font-size: 10px" class="secondary">
+            In his senior year, he's currently taking AP French, AP Calc BC, AP Physics 1, and UCONN/ECE Writing & Composition
+          </p>
+          <button
+            onclick="scrollToDiv('i-extracurricular')"
+            class="scrolling-button"
+            style="width: 300px; margin: 0"
+          >
+            Continue
+            <svg
+              class="sb-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+            >
+              <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+              <path
+                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="marathon-visual" id="acad-visual">
+          <div class="img-wrapper">
+          <img
+            class="hartford-marathon-image"
+            id="academic-img"
+            src="images/IMG_4688.jpeg"
+            alt="Image of Aarish Kodnaney in the locker room at his gym."
+          />
+        </div>
+        </div>
+      </div>
+      <div class="marathon extracurricular-marathon" id="i-extracurricular">
+        <div class="marathon-text academic-text">
+          <hgroup class="marathon-hgroup">
+            <h1>Additional Extracurriculars</h1>
+            <h6>These are some of the ECs he is most proud of.</h6>
+          </hgroup>
+          <ul id="ecul">
+            <li>Founder & President of the SFHA Committee</li>
+            <li>Interact Club Officer</li>
+            <li>Former Intern at Next Level IT</li>
+            <li>Former Instructor at iCode School of Coding</li>
+            <li>Former Project volunteer at Journey Found</li>
+            <li>
+              Former CS Team Leader of FBLA - Led development of
+              <a
+                href="http://fbla-project.onrender.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Edubank</a
+              >
+              - placed 2nd statewide.
+            </li>
+            <li>2025 Jim Snow Rec basketball champion</li>
+            <li>Part-Time Barista at Starbucks</li>
+          </ul>
+          <p style="font-size: 10px" class="secondary">
+            You can view all this and more in a detailed and corporate-oriented
+            format using Aarish's resume
+            <br />
+            Note: Edubank takes about 3 mins to load the first time.
+          </p>
+          <div class="final-buttons">
+            <button
+              onclick="scrollToDiv('i-stats')"
+              class="scrolling-button"
+              style="width: 250px; margin: 0"
+            >
+              Continue
+              <svg
+                class="sb-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+              >
+                <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                <path
+                  d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                />
+              </svg>
+            </button>
+            <a id="sce"
+              class="contrast"
+              href="subpages/resume.html"
+              style="text-decoration: none"
+              ><button class="scrolling-button" style="width: 250px; margin: 0">
+                Aarish's resume
+                <svg
+                  style="transform: rotate(270deg)"
+                  class="sb-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                >
+                  <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                  <path
+                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                  />
+                </svg></button
+            ></a>
+          </div>
+        </div>
+        <div class="marathon-visual" id="">
+          <img
+            style="object-fit: cover; height: 70vh"
+            class="hartford-marathon-image"
+            src="images/IMG_3810.PNG"
+            alt="Image
+          of Aarish Kodnaney in front of a picture of Aarish Kodnaney. This
+          picture of Aarish Kodnaney is on the wall of his high school - South
+          Windsor High School."
+          />
+        </div>
+      </div>
+      <div class="marathon" id="i-stats">
+        <div class="marathon-text academic-text" id="rotated-text">
+          <h1 id="deskh1" style="font-size: 105px;"><mj class="aarish-kodnaney">Copyright</mj> 2025 Aarish <mj class="aarish-kodnaney">Kodnaney</mj></h1>
+          <h1 id="mobh1" style="font-size: 105px;">Aarish <mj class="aarish-kodnaney">Kodnaney</mj></h1>
+
+          </div>
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
+    <script>date()</script>
   </body>
 </html>

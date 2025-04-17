@@ -9,8 +9,22 @@
   align-items: center;
 }
 
+html {
+  scroll-behavior: smooth;
+  width: 99vw;
+}
+
 .nav-elements-list {
   padding-left: 1.7vw;
+}
+
+.scrolling-button {
+  background-color: rgb(49, 60, 91);
+  border: none;
+  color: #fff;
+  width: 275px;
+  margin-left: 5%;
+  margin-top: 50px;
 }
 
 .img-container-tablet-phone {
@@ -29,6 +43,14 @@
   margin-left: 5%;
 }
 
+.sb-icon {
+  height: 10px;
+}
+
+.inner-headings h5 {
+  margin-left: 5%;
+}
+
 .inner-headings .intro-text {
   margin-left: 5%;
   margin-right: 5%;
@@ -42,10 +64,15 @@
 }
 
 .center-image {
-  height: 45vw;
-  width: 45vw;
+  /* zoom: 105%; */
+  aspect-ratio: 1/1;
+  width: 100%;
   border-radius: 50%;
   object-fit: cover;
+}
+
+ng {
+  color: rgb(202, 50, 53);
 }
 
 .center-f {
@@ -113,7 +140,7 @@
   display: none;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 991px) {
   .desktop-navbar {
     display: none;
   }
@@ -129,17 +156,26 @@
   .mobile-navbar {
     display: flex;
   }
+  /* .mobile-break: {
+    display: flex;
+  } */
 
   .nav-elements-list {
     margin-left: 10%;
   }
 
-  .center-image {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
+  .center-im age {
+    /* margin-top: 5vh;
+    margin-bottom: 5vh; */
+    zoom: 4;
   }
 
   .inner-headings h1 {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .inner-headings h5 {
     text-align: center;
     margin-left: 0;
   }
@@ -151,6 +187,25 @@
 
   .inner-headings .intro-text {
     text-align: center;
+    display: none;
+  }
+  .site-upper-content {
+    z-index: 1;
+    position: relative;
+    margin-top: 40vh;
+  }
+
+  #i-start {
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
+  }
+
+  #northeastern-image {
+    display: none;
+  }
+
+  .marathon-text {
+    width: 100%;
   }
 }
 
@@ -161,13 +216,25 @@
 
   .img-container-tablet-phone {
     display: flex;
+    z-index: -1;
+    height: 99vh;
+    position: absolute;
   }
-}
-
-.set-full-height {
-  height: 95%;
 }
 
 .mail-icon {
   height: 10px;
+}
+
+.aarish-kodnaney {
+  color: rgb(131, 162, 255);
+  text-shadow: 0 0 7px rgb(48, 59, 92), 0 0 10px rgb(48, 59, 92),
+    0 0 21px rgb(48, 59, 92), 0 0 42px rgb(48, 59, 92), 0 0 82px rgb(48, 59, 92),
+    0 0 92px rgb(48, 59, 92), 0 0 102px rgb(48, 59, 92),
+    0 0 151px rgb(48, 59, 92);
+}
+
+.xid {
+  height: 75vh;
+  object-fit: cover;
 }
