@@ -228,4 +228,12 @@
   #i-stats {
     overflow: hidden;
   }
+
+  .final-buttons {
+    width: 100%;
+  }
+
+  #track {
+    display: none;
+  }
 }
