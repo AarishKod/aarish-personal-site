@@ -19,6 +19,26 @@
   width: 500px;
 }
 
+.translucent-btn {
+  background-color: rgba(255, 255, 255, 0.05); /* subtle light overlay */
+  color: #dbeafe; /* soft light blue */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 12px 24px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.translucent-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.mobcontrast {
+  text-decoration: none;
+}
+
 .marathon-text {
   width: 33.33333333%;
   padding: 50px;
@@ -240,5 +260,7 @@
   #float-bar {
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
+    width: 100vw;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
 }
