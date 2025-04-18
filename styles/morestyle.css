@@ -197,12 +197,12 @@
   }
 
   .final-buttons {
-    flex-direction: column-reverse;
+    flex-direction: column;
     margin: 0 auto;
   }
 
   #sce {
-    margin-bottom: 10px;
+    margin-top: 10px;
   }
 
   #i-stats {
@@ -235,5 +235,10 @@
 
   #track {
     display: none;
+  }
+
+  #float-bar {
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
   }
 }
