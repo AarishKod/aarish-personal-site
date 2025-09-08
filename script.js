@@ -27,7 +27,7 @@ let toolTip = document.querySelector("em.copy-text-box");
 let toolTipText = toolTip.getAttribute("data-tooltip");
 
 copyButton.onclick = function () {
-  navigator.clipboard.writeText("aarishkod@gmail.com");
+  navigator.clipboard.writeText("kodnaney.a@northeastern.edu");
   toolTip.setAttribute("data-tooltip", "Copied");
   setTimeout(() => {
     toolTip.setAttribute("data-tooltip", "Copy email");
@@ -57,7 +57,7 @@ function date() {
   ];
 
   const monthsOfYear = [
-    "Janruary",
+    "January",
     "February",
     "March",
     "April",
@@ -80,6 +80,8 @@ function date() {
   if (
     ["0", "4", "5", "6", "7", "8", "9"].includes(day2.charAt(day2.length - 1))
   ) {
+    postDate = "th";
+  } else if (["11", "12", "13"].includes(day2)) {
     postDate = "th";
   } else if (day2.charAt(day2.length - 1) == "1") {
     postDate = "st";
