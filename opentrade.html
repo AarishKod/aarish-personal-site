@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For OpenTrade eyes only</title>
+    <link rel="icon" href="images/favicon.ico" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        background-color: #080908;
+        color-scheme: dark;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, "Segoe UI", sans-serif;
+        background: radial-gradient(120% 90% at 50% -8%, rgba(120, 150, 210, 0.08), transparent 50%), #080908;
+        color: #f6f4ef;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        line-height: 1.6;
+      }
+
+      .brand-serif {
+        font-family: "Georgia", "Times New Roman", serif;
+      }
+
+      /* ── Hero ── */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 60px 24px;
+        text-align: center;
+      }
+
+      .hero-eyebrow {
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #ffd21f;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 6vw, 4.5rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 16px;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-sub {
+        font-size: 1.1rem;
+        color: #9aa0aa;
+        max-width: 480px;
+      }
+
+      .hero-divider {
+        width: 48px;
+        height: 3px;
+        background: #ffd21f;
+        border-radius: 2px;
+        margin-top: 40px;
+      }
+
+      /* ── Content sections ── */
+      .content {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 24px 80px;
+      }
+
+      .card {
+        background: #15161a;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 30px;
+        padding: 40px 36px;
+        margin-bottom: 32px;
+      }
+
+      .card h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+      }
+
+      .card p {
+        color: #9aa0aa;
+        font-size: 1rem;
+        margin-bottom: 14px;
+      }
+
+      .card p:last-child {
+        margin-bottom: 0;
+      }
+
+      .bug-label {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #080908;
+        background: #e2645a;
+        padding: 4px 12px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+      }
+
+      .screenshot-wrapper {
+        margin-top: 24px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .screenshot-wrapper img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .detail-box {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 16px;
+        padding: 20px;
+      }
+
+      .detail-box h3 {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #ffd21f;
+        margin-bottom: 8px;
+      }
+
+      .detail-box p {
+        font-size: 0.95rem;
+        color: #f6f4ef;
+        margin-bottom: 0;
+      }
+
+      /* ── CTA section ── */
+      .cta-section {
+        text-align: center;
+        padding: 40px 0 20px;
+      }
+
+      .cta-section h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        letter-spacing: -0.01em;
+      }
+
+      .cta-section p {
+        color: #9aa0aa;
+        font-size: 1rem;
+        margin-bottom: 32px;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hire-btn {
+        display: inline-block;
+        background: #ffd21f;
+        color: #080908;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        padding: 16px 40px;
+        border-radius: 16px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        box-shadow: 0 0 0 0 rgba(255, 210, 31, 0);
+      }
+
+      .hire-btn:hover {
+        transform: scale(1.04);
+        box-shadow: 0 0 24px rgba(255, 210, 31, 0.25);
+      }
+
+      .hire-btn:active {
+        transform: scale(0.98);
+      }
+
+      .contact-reveal {
+        margin-top: 24px;
+        opacity: 0;
+        transform: translateY(10px) scale(0.985);
+        pointer-events: none;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+
+      .contact-reveal.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .contact-card {
+        display: inline-block;
+        background: #15161a;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 28px 36px;
+        text-align: left;
+      }
+
+      .contact-card .contact-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .contact-card .contact-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .contact-card .contact-icon {
+        width: 20px;
+        text-align: center;
+        color: #ffd21f;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+
+      .contact-card a {
+        color: #f6f4ef;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.15s ease;
+      }
+
+      .contact-card a:hover {
+        color: #ffd21f;
+      }
+
+      /* ── Footer ── */
+      .footer {
+        text-align: center;
+        padding: 40px 24px 48px;
+        color: #6c727c;
+        font-size: 0.85rem;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 600px) {
+        .card {
+          padding: 28px 22px;
+          border-radius: 22px;
+        }
+
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+      }
+
+      /* ── Animations ── */
+      @keyframes fade-in-up {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .animate-in {
+        animation: fade-in-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .delay-1 { animation-delay: 0.08s; }
+      .delay-2 { animation-delay: 0.16s; }
+      .delay-3 { animation-delay: 0.24s; }
+      .delay-4 { animation-delay: 0.32s; }
+      .delay-5 { animation-delay: 0.40s; }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-eyebrow animate-in">Intern Application · Bug Report</div>
+      <h1 class="brand-serif animate-in delay-1">For OpenTrade eyes only</h1>
+      <p class="hero-sub animate-in delay-2">
+        A bug I found while trying out your product — and why I want to help fix things like this.
+      </p>
+      <div class="hero-divider animate-in delay-3"></div>
+    </section>
+
+    <div class="content">
+      <!-- Bug Report Card -->
+      <div class="card animate-in delay-2">
+        <div class="bug-label">UI Bug</div>
+        <h2>Dark Mode: Invisible Source Text</h2>
+        <p>
+          While exploring OpenTrade's AI research feature, I noticed that after the agent
+          performs research and displays the sources it found, the source text is rendered in a
+          very dark shade of black. Against the dark mode background, this text is essentially
+          invisible.
+        </p>
+        <div class="screenshot-wrapper">
+          <img
+            src="images/source_bug.jpg"
+            alt="Screenshot showing invisible dark text for AI sources in OpenTrade dark mode"
+          />
+        </div>
+      </div>
+
+      <!-- Details Card -->
+      <div class="card animate-in delay-3">
+        <h2>What's going on</h2>
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h3>Expected</h3>
+            <p>
+              Source text should render in white or a light color in dark mode, matching the
+              rest of the UI's text hierarchy.
+            </p>
+          </div>
+          <div class="detail-box">
+            <h3>Actual</h3>
+            <p>
+              Source text uses a dark black color that blends into the dark background,
+              making it unreadable.
+            </p>
+          </div>
+        </div>
+        <p style="margin-top: 20px;">
+          This is likely a missing <code>color</code> override for the dark theme. The source
+          text probably inherits a default light-mode color (dark text) that doesn't get
+          swapped when the dark theme is active. A fix as simple as setting the source text
+          color to <code>var(--text)</code> or <code>#f6f4ef</code> in the dark theme
+          stylesheet should resolve it.
+        </p>
+        <p>
+          Users rely on source attribution to trust AI-generated insights. If they can't see
+          where the information came from, it undermines confidence in the product — which is
+          otherwise genuinely impressive.
+        </p>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="cta-section animate-in delay-4">
+        <h2 class="brand-serif">Want someone who actually uses your product?</h2>
+        <p>
+          I signed up to evaluate OpenTrade as a potential intern. I stayed because I think
+          what you're building is genuinely cool.
+        </p>
+        <button class="hire-btn" onclick="revealContact()">Let's talk</button>
+        <div class="contact-reveal" id="contactReveal">
+          <div class="contact-card">
+            <div class="contact-row">
+              <span class="contact-icon">✉</span>
+              <a href="mailto:kodnaney.a@northeastern.edu">kodnaney.a@northeastern.edu</a>
+            </div>
+            <div class="contact-row">
+              <span class="contact-icon">☎</span>
+              <a href="tel:+18604265570">+1 860-426-5570</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      Aarish Kodnaney · Northeastern University 29'
+    </footer>
+
+    <script>
+      function revealContact() {
+        var el = document.getElementById("contactReveal");
+        el.classList.toggle("visible");
+      }
+    </script>
+  </body>
+</html>
