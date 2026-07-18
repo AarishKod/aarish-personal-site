@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="Two bugs found in the OpenTrade iOS app — sign-in fails on both Apple and Google, and AI research sources render invisible in dark mode. Found by Aarish Kodnaney."
+    />
+    <title>OpenTrade Bug Report — Aarish Kodnaney</title>
+    <link rel="icon" href="images/favicon.ico" />
+    <!-- Same stack as opentrade.live: Geist Variable (sans) + Georgia (serif) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource-variable/geist@5/index.min.css"
+    />
+    <style>
+      :root {
+        --bg: #f5f3ee;
+        --card: #ffffff;
+        --card-border: rgba(20, 24, 40, 0.08);
+        --text: #171b26;
+        --text-dim: #5f6673;
+        --label: #8a8f9c;
+        --yellow: #f5b43a;
+        --teal: #1fae8f;
+        --green: #34b67a;
+        --red: #e35d5d;
+        --radius: 24px;
+        --sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+        --serif: Georgia, "Times New Roman", serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── App-style top bar ─────────────────────────────── */
+      .topbar {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 28px 20px 0;
+        text-align: center;
+      }
+
+      .wordmark {
+        font-family: var(--serif);
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .ticker {
+        margin: 14px auto 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text-dim);
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: 999px;
+        padding: 7px 14px;
+      }
+
+      .ticker .eye {
+        color: var(--teal);
+        font-size: 12px;
+      }
+
+      /* ── Layout ────────────────────────────────────────── */
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 26px 20px 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        padding: 26px 24px;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04),
+          0 8px 24px rgba(16, 24, 40, 0.05);
+      }
+
+      .section-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        color: var(--label);
+        margin-bottom: 14px;
+      }
+
+      h1,
+      h2 {
+        font-family: var(--serif);
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        font-size: clamp(27px, 5.5vw, 36px);
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        font-size: clamp(21px, 4.5vw, 25px);
+        margin-bottom: 12px;
+      }
+
+      .accent {
+        color: #d99812; /* darker amber so it reads on cream */
+      }
+
+      p {
+        color: var(--text-dim);
+        font-size: 15.5px;
+      }
+
+      p + p {
+        margin-top: 10px;
+      }
+
+      p strong,
+      li strong {
+        color: var(--text);
+      }
+
+      /* ── Pills & chips ─────────────────────────────────── */
+      .bug-pill {
+        display: inline-block;
+        font-size: 11.5px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 999px;
+        padding: 5px 12px;
+        margin-bottom: 14px;
+        background: var(--yellow);
+        color: #1a1405;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .chip {
+        font-size: 12.5px;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 6px 13px;
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        background: var(--bg);
+      }
+
+      .chip.solid {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: #1a1405;
+      }
+
+      .chip.red {
+        background: var(--red);
+        border-color: var(--red);
+        color: #fff;
+      }
+
+      .chip.teal {
+        border-color: rgba(31, 174, 143, 0.45);
+        color: var(--teal);
+      }
+
+      /* ── Media evidence ────────────────────────────────── */
+      .shot-wrap {
+        text-align: center;
+      }
+
+      .shot-wrap img,
+      .shot-wrap video {
+        width: 100%;
+        max-width: 360px;
+        border-radius: 28px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 12px 32px rgba(16, 24, 40, 0.12);
+        display: block;
+        margin: 0 auto;
+        background: #000;
+      }
+
+      .caption {
+        margin-top: 14px;
+        font-size: 13px;
+        color: var(--label);
+        text-align: left;
+      }
+
+      .caption .accent {
+        font-weight: 600;
+      }
+
+      /* ── Repro timeline (echoes the "WHY NOW" card) ────── */
+      .steps {
+        list-style: none;
+        position: relative;
+        margin-left: 8px;
+        padding-left: 26px;
+      }
+
+      .steps::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        bottom: 10px;
+        width: 2px;
+        background: #e6e2d9;
+        border-radius: 2px;
+      }
+
+      .steps li {
+        position: relative;
+        padding: 10px 0;
+        color: var(--text-dim);
+        font-size: 15px;
+      }
+
+      .steps li::before {
+        content: "";
+        position: absolute;
+        left: -27px;
+        top: 16px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #d8d3c8;
+      }
+
+      .steps li:last-child::before {
+        background: var(--yellow);
+        box-shadow: 0 0 0 4px rgba(245, 180, 58, 0.25);
+      }
+
+      /* ── Expected / actual demo (recreates DARK mode) ──── */
+      .demo-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      @media (min-width: 620px) {
+        .demo-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .demo {
+        background: #10141c;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .demo-tag {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 999px;
+        padding: 4px 11px;
+        margin-bottom: 14px;
+      }
+
+      .demo-tag.bug {
+        color: var(--red);
+        border: 1px solid rgba(227, 93, 93, 0.45);
+      }
+
+      .demo-tag.fix {
+        background: var(--yellow);
+        color: #1a1405;
+      }
+
+      .answer-label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        color: #79828f;
+        margin-bottom: 10px;
+      }
+
+      .answer-label::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--yellow);
+      }
+
+      .demo p {
+        font-size: 14.5px;
+        color: #f2f4f8;
+      }
+
+      .source-buggy {
+        color: #262a33; /* the bug: near-black on the dark card */
+      }
+
+      .source-fixed {
+        color: #ffffff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+      }
+
+      .demo-note {
+        margin-top: 12px;
+        font-size: 12.5px;
+        color: #79828f;
+      }
+
+      /* ── Expected list ─────────────────────────────────── */
+      .expected {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 4px;
+      }
+
+      .expected li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: var(--text-dim);
+        font-size: 15px;
+      }
+
+      .expected li::before {
+        content: "✓";
+        flex: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(52, 182, 122, 0.15);
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1px;
+      }
+
+      .expected li strong {
+        color: var(--text);
+      }
+
+      /* ── Footer ────────────────────────────────────────── */
+      footer {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 20px 50px;
+        text-align: center;
+        font-size: 13.5px;
+        color: var(--label);
+      }
+
+      footer a {
+        color: var(--teal);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── Password gate ───────────────────────────────── */
+      body.locked {
+        overflow: hidden;
+      }
+
+      #gate {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      #gate[hidden] {
+        display: none;
+      }
+
+      .gate-card {
+        width: 100%;
+        max-width: 380px;
+        text-align: center;
+      }
+
+      .gate-card .wordmark {
+        margin-bottom: 18px;
+      }
+
+      .gate-box {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius);
+        padding: 28px 24px;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04),
+          0 8px 24px rgba(16, 24, 40, 0.05);
+      }
+
+      .gate-box p {
+        font-size: 14.5px;
+        margin-bottom: 18px;
+      }
+
+      .gate-box form {
+        display: flex;
+        gap: 8px;
+      }
+
+      .gate-box input {
+        flex: 1;
+        min-width: 0;
+        font: inherit;
+        font-size: 15px;
+        color: var(--text);
+        background: var(--bg);
+        border: 1px solid var(--card-border);
+        border-radius: 999px;
+        padding: 11px 16px;
+        outline: none;
+      }
+
+      .gate-box input:focus {
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 3px rgba(245, 180, 58, 0.25);
+      }
+
+      .gate-error {
+        margin-top: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--red);
+        min-height: 18px;
+      }
+
+      /* ── Shared yellow pill button ─────────────────────── */
+      .btn-yellow {
+        font: inherit;
+        font-size: 14.5px;
+        font-weight: 700;
+        border: none;
+        border-radius: 999px;
+        padding: 11px 20px;
+        background: var(--yellow);
+        color: #1a1405;
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+
+      .btn-yellow:hover {
+        box-shadow: 0 4px 14px rgba(245, 180, 58, 0.45);
+        transform: translateY(-1px);
+      }
+
+      /* ── Hire me ───────────────────────────────────────── */
+      .hire-wrap {
+        margin-top: 20px;
+      }
+
+      #hire-panel {
+        margin-top: 14px;
+        background: var(--bg);
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        text-align: left;
+      }
+
+      #hire-panel[hidden] {
+        display: none;
+      }
+
+      .hire-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+      }
+
+      .hire-row .hire-icon {
+        flex: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(52, 182, 122, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+      }
+
+      .hire-row .hire-kind {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--label);
+      }
+
+      .hire-row a {
+        color: var(--text);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .hire-row a:hover {
+        color: var(--teal);
+      }
+    </style>
+  </head>
+  <body class="locked">
+    <!-- Password gate — client-side, casual-privacy only (see script note) -->
+    <div id="gate">
+      <div class="gate-card">
+        <div class="wordmark">OpenTrade</div>
+        <div class="gate-box">
+          <div class="section-label">Private Bug Report</div>
+          <p>
+            This page is intended for the OpenTrade team. Enter the password
+            from my application note to view it.
+          </p>
+          <form id="gate-form" autocomplete="off">
+            <input
+              type="password"
+              id="gate-input"
+              placeholder="Password"
+              aria-label="Password"
+              autocapitalize="off"
+              spellcheck="false"
+            />
+            <button type="submit" class="btn-yellow">View</button>
+          </form>
+          <div class="gate-error" id="gate-error" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="wordmark">OpenTrade</div>
+      <div class="ticker">
+        <span>by aarish kodnaney</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="card">
+        <div class="section-label">Bug Report · iOS App</div>
+        <h1>
+          Hi there! Thought I'd help a bit<br /><span class="accent">- Aarish</span>
+        </h1>
+        <p>
+          Hi OpenTrade team, I'm <strong>Aarish</strong>, a current Data Engineer Intern at Munich Re and a CS
+          &amp; Finance student at Northeastern applying to be an intern. I
+          downloaded the app to see if the product was as interesting as the
+          pitch (it is — I genuinely like it). Along the way I hit two bugs:
+          <strong>account sign-in fails on both providers</strong>, and the AI's
+          <strong>research citations are invisible in dark mode</strong>.
+          Details, evidence, and repro steps below.
+        </p>
+        <div class="chips">
+          <span class="chip solid">2 bugs</span>
+          <span class="chip">Platform: iOS</span>
+          <span class="chip teal">Found in normal use, no weird setup</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ BUG 01: sign-in ═══════════ -->
+      <section class="card">
+        <span class="bug-pill">Bug 01</span>
+        <h2>Nobody can actually create an account</h2>
+        <p>
+          On the <strong>You</strong> tab, the <strong>Sync your deck</strong>
+          card offers two sign-in options. Both fail — in two different ways:
+        </p>
+        <p>
+          <strong>Continue with Apple</strong> opens the native Sign in with
+          Apple sheet, but after Face ID succeeds it comes back with
+          <strong>"Sign Up Not Completed"</strong> — every time.
+        </p>
+        <p>
+          <strong>Continue with Google</strong> completes the OAuth flow, but
+          instead of handing the session back to the app, it loads
+          <strong>app.opentrade.live inside the in-app browser sheet</strong>.
+          Dismiss the sheet and the native app is still in
+          <strong>Guest mode</strong> — nothing syncs.
+        </p>
+        <div class="chips">
+          <span class="chip red">Severity: High — sign-up blocked</span>
+          <span class="chip">Area: You tab → Sync your deck</span>
+        </div>
+      </section>
+
+      <section class="card shot-wrap">
+        <div class="section-label" style="text-align: left">Evidence · Screen Recording</div>
+        <video controls playsinline preload="metadata" poster="images/login_bug_poster.jpg" src="images/login_bug.MP4">
+          Your browser doesn't support embedded video — the recording shows both
+          sign-in providers failing as described above.
+        </video>
+        <div class="caption">
+          <span class="accent">0:00–0:08</span> — Apple: Face ID succeeds, sheet
+          returns <span class="accent">"Sign Up Not Completed"</span>, twice.
+          <span class="accent">0:09–end</span> — Google: OAuth succeeds, then
+          strands the user in a webview of the web app; the native app stays in
+          Guest mode.
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-label">How to Reproduce</div>
+        <ol class="steps">
+          <li>Open the <strong>You</strong> tab as a guest and find <strong>Sync your deck</strong>.</li>
+          <li>Tap <strong>Continue with Apple</strong> and complete the native sheet with Face ID.</li>
+          <li>The sheet returns <strong>"Sign Up Not Completed"</strong> — reproducible on every attempt.</li>
+          <li>Tap <strong>Continue with Google</strong> and approve the sign-in prompt.</li>
+          <li>OAuth completes, but the session opens <strong>inside the browser sheet</strong> instead of returning to the app — you're left in <strong>Guest mode</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="section-label">Expected Behavior</div>
+        <ul class="expected">
+          <li>
+            <span><strong>Apple:</strong> the sheet completes account creation,
+            dismisses itself, and the deck syncs.</span>
+          </li>
+          <li>
+            <span><strong>Google:</strong> after OAuth, the session redirects
+            back into the native app (universal link / custom-scheme callback)
+            and lands signed in — not stranded in a webview of the web
+            app.</span>
+          </li>
+        </ul>
+        <p style="margin-top: 16px">
+          <strong>Why it matters:</strong> this card is the entire
+          account-creation funnel. Every new iOS user who tries to sign up right
+          now can't — and a failed sign-up is where most of them would churn.
+          Guest mode is the only reason I could keep testing.
+        </p>
+      </section>
+
+      <!-- ═══════════ BUG 02: invisible sources ═══════════ -->
+      <section class="card">
+        <span class="bug-pill">Bug 02</span>
+        <h2>The sources are there. You just can't see them.</h2>
+        <p>
+          In <strong>dark mode</strong>, when the AI finishes researching a
+          question, its ANSWER card appends an inline source citation — e.g.
+          <strong>(ir.carpentertechnology.com)</strong> — rendered in a very
+          dark shade on the dark card. The text should flip to white; instead
+          it's effectively invisible.
+        </p>
+        <div class="chips">
+          <span class="chip solid">Severity: Low · Cosmetic</span>
+          <span class="chip">Appearance: Dark mode</span>
+          <span class="chip teal">Area: AI chat → ANSWER card</span>
+        </div>
+      </section>
+
+      <section class="card shot-wrap">
+        <div class="section-label" style="text-align: left">Evidence · Screenshot</div>
+        <img
+          src="images/source_bug.jpg"
+          alt="Screenshot of OpenTrade's AI chat in dark mode. Two ANSWER cards about Carpenter Technology earnings end with an inline source citation, circled in green, that is rendered in near-black text on the dark card and is effectively invisible."
+        />
+        <div class="caption">
+          <span class="accent">Circled:</span> inline source citations like
+          <span class="accent">(ir.carpentertechnology.com)</span> rendered in
+          near-black on the dark ANSWER card. Found while researching $CRS
+          (Carpenter Technology) with the in-app AI.
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-label">How to Reproduce</div>
+        <ol class="steps">
+          <li>Open the app with the appearance set to <strong>dark mode</strong>.</li>
+          <li>Open any story and ask the AI a research question — e.g. <strong>"When did their earnings come out?"</strong></li>
+          <li>The <strong>ANSWER</strong> card appends an inline source citation, e.g. <strong>(ir.carpentertechnology.com)</strong>.</li>
+          <li>The citation renders in a <strong>very dark shade on the dark card</strong> — effectively invisible.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="section-label">Expected vs Actual · Recreated Dark-Mode Card</div>
+        <div class="demo-grid">
+          <div class="demo">
+            <span class="demo-tag bug">Actual</span>
+            <div class="answer-label">Answer</div>
+            <p>
+              Carpenter Technology's fiscal Q4 2026 earnings are scheduled for
+              Thursday, July 30, 2026…
+              <span class="source-buggy">(ir.carpentertechnology.com)</span>
+            </p>
+            <div class="demo-note">
+              Citation inherits a hard-coded dark color — it never adapts to the
+              dark appearance. (Squint. It's there.)
+            </div>
+          </div>
+          <div class="demo">
+            <span class="demo-tag fix">Expected</span>
+            <div class="answer-label">Answer</div>
+            <p>
+              Carpenter Technology's fiscal Q4 2026 earnings are scheduled for
+              Thursday, July 30, 2026…
+              <span class="source-fixed">(ir.carpentertechnology.com)</span>
+            </p>
+            <div class="demo-note">
+              In dark mode the citation should flip to white (or a light,
+              tappable link style) — same treatment the answer body already
+              gets.
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 16px">
+          Likely a hard-coded text color on the citation span that doesn't
+          respond to the dark-appearance trait, rather than a dynamic/system
+          color.
+        </p>
+        <p>
+          <strong>Why it matters:</strong> the card right above the chat tells
+          users <strong>"Verify every figure at the linked source before
+          acting."</strong> For a product whose pitch is hedge-fund-level
+          research for everyone, those citations are the trust layer — they just
+          happen to be the one thing on screen nobody can read.
+        </p>
+      </section>
+
+      <!-- Closing -->
+      <section class="card">
+        <div class="section-label">One Last Thing</div>
+        <p>
+          I found both of these within my first few sessions of ordinary use —
+          no edge-case hunting. I like the product enough to have kept going
+          after the sign-in wall, and I'd love to help find (and fix) the next
+          ones <strong>as an intern</strong>.
+        </p>
+        <div class="hire-wrap">
+          <button type="button" class="btn-yellow" id="hire-btn">Hire me ↗</button>
+          <div id="hire-panel" hidden>
+            <div class="hire-row">
+              <span class="hire-icon">📞</span>
+              <span>
+                <span class="hire-kind">Phone</span>
+                <a href="tel:+18604265570">+1 (860) 426-5570</a>
+              </span>
+            </div>
+            <div class="hire-row">
+              <span class="hire-icon">✉️</span>
+              <span>
+                <span class="hire-kind">Email</span>
+                <a href="mailto:kodnaney.a@northeastern.edu">kodnaney.a@northeastern.edu</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Found &amp; reported by Aarish Kodnaney · Northeastern University '29<br />
+      <a href="https://www.ycombinator.com/companies/opentrade" target="_blank" rel="noopener">OpenTrade on Y Combinator ↗</a>
+      &nbsp;·&nbsp;
+      <a href="index.html">Back to my main site</a>
+    </footer>
+
+    <script>
+      // ── Password gate ──────────────────────────────────
+      // Casual privacy only: the password is checked as a djb2 hash so the
+      // plaintext isn't in the source, but anyone determined can bypass a
+      // client-side gate via devtools. It's a velvet rope, not a lock.
+      (function () {
+        var EXPECTED = 281333372; // djb2("ycs26")
+        var gate = document.getElementById("gate");
+        var form = document.getElementById("gate-form");
+        var input = document.getElementById("gate-input");
+        var error = document.getElementById("gate-error");
+
+        function djb2(s) {
+          var h = 5381;
+          for (var i = 0; i < s.length; i++) {
+            h = (h * 33 + s.charCodeAt(i)) >>> 0;
+          }
+          return h;
+        }
+
+        function unlock(persist) {
+          gate.hidden = true;
+          document.body.classList.remove("locked");
+          if (persist) {
+            try {
+              sessionStorage.setItem("ot-unlocked", "1");
+            } catch (e) {}
+          }
+        }
+
+        try {
+          if (sessionStorage.getItem("ot-unlocked") === "1") unlock(false);
+        } catch (e) {}
+
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          if (djb2(input.value.trim().toLowerCase()) === EXPECTED) {
+            unlock(true);
+          } else {
+            error.textContent = "Wrong password — try again.";
+            input.value = "";
+            input.focus();
+          }
+        });
+
+        if (!gate.hidden) input.focus();
+      })();
+
+      // ── Hire me toggle ─────────────────────────────────
+      (function () {
+        var btn = document.getElementById("hire-btn");
+        var panel = document.getElementById("hire-panel");
+        btn.addEventListener("click", function () {
+          var nowHidden = !panel.hidden;
+          panel.hidden = nowHidden;
+          btn.textContent = nowHidden ? "Hire me ↗" : "Hide contact ↓";
+        });
+      })();
+    </script>
+  </body>
+</html>
